@@ -1,0 +1,58 @@
+Notes
+#1-2: First run-
+Results for the extraLargeArray
+insert 969.0809 ms
+append 2.6828 ms
+
+#3: Second run with multiple arrays-
+Timing results for different array sizes:
+┌───────────────┬─────────────────────┬──────────────┬──────────────────────┬────────────────────┬────────────────────┐
+│ (index)       │ 0                   │ 1            │ 2                    │ 3                  │ 4                  │
+├───────────────┼─────────────────────┼──────────────┼──────────────────────┼────────────────────┼────────────────────┤
+│ Array Size    │ 'tinyArray'         │ 'smallArray' │ 'mediumArray'        │ 'largeArray'       │ 'extraLargeArray'  │
+│ doublerAppend │ 0.09949999999999999 │ 0.018        │ 0.046599999999999996 │ 0.5076999999999999 │ 1.9391999999999998 │
+│ doublerInsert │ 0.0433              │ 0.0159       │ 0.1837               │ 9.8829             │ 987.1914999999999  │
+└───────────────┴─────────────────────┴──────────────┴──────────────────────┴────────────────────┴────────────────────┘
+
+#4: Pattern explanation-
+The exlanation could be found through the definitions of doublerAppend and doublerInsert, but using the examples it is even more clear. 
+Upon examining the timing results for different array sizes, a clear pattern emerges regarding how each function "scales" with increasing array size. 
+The doublerAppend function exhibits a relatively consistent increase in execution time as the array size grows, 
+with a notable jump in time observed between the large and extra-large arrays. 
+Conversely, the doublerInsert function shows a more dramatic increase in execution time as the array size increases, 
+particularly evident with the large and extra-large arrays where the execution time significantly spikes. Comparing the two functions, 
+doublerAppend scales better overall, as it maintains a more gradual increase in execution time compared to doublerInsert, 
+which experiences exponential growth with larger arrays. This observation is supported by the timing results for the extra-large array, 
+where doublerAppend completes substantially faster than doublerInsert, further indicating its superior scalability.
+
+#5: Extra credit on why slower function is so much slower-
+The slower function, doublerInsert, is significantly slower due to its use of the unshift() method within the loop. 
+The unshift() method inserts new elements at the beginning of an array, which requires shifting all existing elements to higher indexes, 
+thereby causing a performance bottleneck. This operation has a time complexity of O(n), where n is the number of elements in the array. 
+As the array size increases, the time taken to shift elements grows proportionally, resulting in exponential growth in execution time.
+
+In contrast, the doublerAppend function only utilizes the push() method to add elements to the end of the array. 
+The push() method has a time complexity of O(1), meaning it operates in constant time regardless of the array size. 
+Consequently, doublerAppend scales more efficiently with larger arrays, as its time complexity remains constant.
+
+In summary, the slower function, doublerInsert, suffers from poor performance due to its use of the unshift() method, 
+which has a time complexity that grows linearly with the size of the array. This leads to significant slowdowns as the array size increases, 
+making it less suitable for handling large datasets compared to the more efficient doublerAppend function.
+
+Extra Credit Part 2:
+Sum Zero:
+
+Space Complexity: O(n)
+We use a set to store numbers seen so far. The space required by the set grows linearly with the size of the input array.
+Unique Characters:
+
+Space Complexity: O(n)
+We use a set to store unique characters seen so far. The space required by the set grows linearly with the length of the input word.
+Pangram Sentence:
+
+Space Complexity: O(1) or O(26)
+We use two sets: one to store all English alphabet letters and another to store unique letters in the sentence. The maximum number of elements in both sets is fixed (26 for the alphabet set and the number of unique characters in the English alphabet for the sentence set), regardless of the input size.
+Longest Word:
+
+Space Complexity: O(1)
+The function only uses a few constant space variables (e.g., longestLength), regardless of the input size. Therefore, the space complexity is constant.
